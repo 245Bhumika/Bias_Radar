@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bias Radar | Fairness Auditing System</title>
+
+<style>
+:root{
+  --bg:#F3F3E0;
+  --primary:#27548A;
+  --secondary:#183B4D;
+  --accent:#DDA853;
+  --card:#ffffff;
+  --text:#1f2933;
+  --muted:#6b7280;
+  --border:#d1d5db;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+
+body{
+  font-family:"Inter","Segoe UI",system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.8;
+}
+
+/* NAV */
+nav{
+  position:sticky;
+  top:0;
+  background:#ffffffee;
+  border-bottom:1px solid var(--border);
+  z-index:100;
+}
+.nav-container{
+  max-width:1200px;
+  margin:auto;
+  padding:1rem 1.5rem;
+  display:flex;
+  justify-content:space-between;
+}
+.logo{
+  font-size:1.6rem;
+  font-weight:800;
+  color:var(--primary);
+}
+.nav-links a{
+  margin-left:1.2rem;
+  text-decoration:none;
+  color:var(--muted);
+}
+.nav-links a:hover{color:var(--primary);}
+
+/* SECTIONS */
+section{padding:5rem 1.5rem;}
+.alt{background:#ffffff;}
+.container{max-width:1200px;margin:auto;}
+
+.section-title{
+  font-size:2.6rem;
+  color:var(--primary);
+  margin-bottom:1rem;
+}
+.section-subtitle{
+  max-width:950px;
+  color:var(--muted);
+  margin-bottom:3rem;
+}
+
+/* HERO */
+.hero{text-align:center;padding-top:6rem;}
+.hero h1{
+  font-size:4.4rem;
+  font-weight:900;
+  color:var(--primary);
+}
+.hero p{
+  max-width:900px;
+  margin:2rem auto;
+  font-size:1.2rem;
+  color:var(--secondary);
+}
+.hero-tag{
+  display:inline-block;
+  padding:.7rem 1.6rem;
+  border-radius:999px;
+  background:var(--accent);
+  color:#000;
+  font-weight:700;
+}
+
+/* GRID & CARDS */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:2rem;
+}
+.card{
+  background:var(--card);
+  border-radius:18px;
+  padding:2.2rem;
+  border:2px solid var(--secondary);
+}
+.card h3{
+  color:var(--primary);
+  margin-bottom:.8rem;
+}
+
+/* PROBLEM STATEMENT */
+.problem-box{
+  background:#fff;
+  border-left:6px solid var(--accent);
+  padding:2.5rem;
+  border-radius:18px;
+  font-size:1.05rem;
+}
+
+/* WORKFLOW */
+.workflow{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:1rem;
+}
+.step{
+  background:#fff;
+  border:2px solid var(--secondary);
+  border-radius:16px;
+  padding:1.4rem;
+  min-width:180px;
+  text-align:center;
+  font-weight:700;
+}
+.arrow{
+  font-size:2rem;
+  color:var(--accent);
+}
+
+/* ARCHITECTURE (VERTICAL) */
+.arch{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1.2rem;
+}
+.arch-box{
+  background:#fff;
+  border:2px solid var(--primary);
+  padding:1.6rem 2.4rem;
+  border-radius:16px;
+  font-weight:700;
+  min-width:260px;
+  text-align:center;
+}
+.arch-arrow{
+  font-size:2rem;
+  color:var(--accent);
+}
+
+/* TIMELINE (CANVA STYLE) */
+.timeline{
+  position:relative;
+  max-width:800px;
+  margin:auto;
+}
+.timeline::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:0;
+  bottom:0;
+  width:4px;
+  background:var(--secondary);
+}
+.time-item{
+  position:relative;
+  width:50%;
+  padding:1.5rem 2rem;
+}
+.time-item.left{left:0;text-align:right;}
+.time-item.right{left:50%;}
+.time-card{
+  background:#fff;
+  border:2px solid var(--secondary);
+  border-radius:16px;
+  padding:1.6rem;
+}
+.year{
+  display:inline-block;
+  background:var(--accent);
+  padding:.4rem 1rem;
+  border-radius:999px;
+  font-weight:700;
+  margin-bottom:.5rem;
+}
+
+/* TEAM */
+.team{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:1.6rem;
+}
+.member{
+  background:#fff;
+  border:2px solid var(--secondary);
+  border-radius:16px;
+  padding:1.4rem;
+  text-align:center;
+  font-weight:700;
+}
+
+footer{
+  background:var(--secondary);
+  color:#fff;
+  text-align:center;
+  padding:2rem;
+  margin-top:4rem;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="nav-container">
+    <div class="logo">Bias Radar</div>
+    <div class="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#literature">Literature</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#timeline">Timeline</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <h1>Bias Radar</h1>
+    <p>
+      A fairness auditing system designed to uncover hidden bias in machine
+      learning decisions by analyzing group-wise outcomes rather than relying
+      solely on accuracy.
+    </p>
+    <div class="hero-tag">Fairness • Transparency • Responsible AI</div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem" class="alt">
+  <div class="container">
+    <h2 class="section-title">Problem Statement</h2>
+    <div class="problem-box">
+      Modern machine learning systems are often evaluated using aggregate
+      performance metrics such as accuracy. However, these metrics fail to
+      capture how decisions affect different demographic or categorical groups.
+      As a result, models can appear reliable while still producing unfair or
+      biased outcomes. There is a need for a system that audits decisions after
+      prediction and highlights hidden disparities in an interpretable manner.
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT OBJECTIVES -->
+<section id="objectives">
+  <div class="container">
+    <h2 class="section-title">Project Objectives</h2>
+    <p class="section-subtitle">
+      The primary objectives of the Bias Radar project are defined to ensure
+      clarity, measurability, and alignment with responsible AI practices.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Understand Bias in ML Decisions</h3>
+        <p>
+          To study how bias can emerge in machine learning systems even when
+          models achieve high accuracy, and to understand its real-world impact
+          on different groups.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Design a Fairness Auditing Framework</h3>
+        <p>
+          To design a post-decision auditing system that evaluates model outcomes
+          rather than modifying or retraining the underlying machine learning
+          model.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Enable Visual Interpretability</h3>
+        <p>
+          To present fairness insights through clear visual representations that
+          can be easily interpreted by both technical and non-technical users.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Promote Responsible AI Awareness</h3>
+        <p>
+          To highlight the importance of ethical evaluation in AI systems and
+          encourage fairness-aware decision-making in real-world applications.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LITERATURE REVIEW (DETAILED) -->
+<section id="literature">
+  <div class="container">
+    <h2 class="section-title">Literature Review</h2>
+    <p class="section-subtitle">
+      This review summarizes existing research on bias in machine learning,
+      fairness evaluation, and limitations of current approaches.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Bias in Training Data</h3>
+        <p>
+          Research consistently shows that ML models inherit bias from historical
+          and imbalanced datasets. These biases may stem from societal
+          inequalities, underrepresentation, or flawed data collection practices.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Accuracy as an Incomplete Metric</h3>
+        <p>
+          Accuracy-centric evaluation hides group-level disparities. A model can
+          perform well overall while producing systematically unfavorable
+          outcomes for certain groups.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Fairness Definitions</h3>
+        <p>
+          Fairness metrics such as demographic parity and equal opportunity
+          attempt to formalize fairness, but research highlights unavoidable
+          trade-offs between these definitions.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Limitations of Existing Tools</h3>
+        <p>
+          Existing bias detection tools are often complex and require advanced
+          technical knowledge, limiting their accessibility and interpretability.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Research Gap</h3>
+        <p>
+          There is a lack of lightweight, post-decision auditing systems that
+          visually communicate fairness risks without modifying models.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Relevance of Bias Radar</h3>
+        <p>
+          Bias Radar addresses this gap by focusing on decision outcomes and
+          presenting fairness insights in a clear, visual, and beginner-friendly
+          manner.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKFLOW -->
+<section id="workflow" class="alt">
+  <div class="container">
+    <h2 class="section-title">System Workflow</h2>
+    <div class="workflow">
+      <div class="step">Decision Data</div>
+      <div class="arrow">➜</div>
+      <div class="step">Sensitive Attributes</div>
+      <div class="arrow">➜</div>
+      <div class="step">Group Segmentation</div>
+      <div class="arrow">➜</div>
+      <div class="step">Bias Analysis</div>
+      <div class="arrow">➜</div>
+      <div class="step">Visual Report</div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+  <div class="container">
+    <h2 class="section-title">System Architecture</h2>
+    <div class="arch">
+      <div class="arch-box">Decision Dataset</div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-box">Attribute Analyzer</div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-box">Bias Detection Engine</div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-box">Visualization Layer</div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-box">Bias Audit Report</div>
+    </div>
+  </div>
+</section>
+
+<!-- REAL-TIME USAGE -->
+<section id="usage" class="alt">
+  <div class="container">
+    <h2 class="section-title">Real-Time Usage</h2>
+    <p class="section-subtitle">
+      Bias Radar can be applied across multiple domains where automated
+      decision-making systems directly affect people and opportunities.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Education & Placements</h3>
+        <p>
+          In college placements, average salary or selection rates may be skewed
+          due to a small number of high-performing students. Bias Radar helps
+          identify whether certain student groups consistently receive fewer
+          opportunities despite similar performance.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Loan & Credit Approval Systems</h3>
+        <p>
+          Financial institutions can use Bias Radar to audit approval decisions
+          and ensure that applicants from specific regions or communities are not
+          systematically disadvantaged.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Hiring & Recruitment Platforms</h3>
+        <p>
+          Automated hiring systems can be audited to detect bias in shortlisting
+          or interview selection processes across demographic groups.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Public Sector & Policy Analysis</h3>
+        <p>
+          Bias Radar can assist policymakers in evaluating fairness in welfare
+          distribution, eligibility decisions, and public service access.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNICAL REQUIREMENTS -->
+<section id="tech" class="alt">
+  <div class="container">
+    <h2 class="section-title">Technical Requirements</h2>
+    <p class="section-subtitle">
+      This section outlines the hardware and software resources required to
+      design, implement, and demonstrate the Bias Radar system effectively.
+    </p>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Software Requirements</h3>
+        <ul style="margin-top:1rem; line-height:1.9;">
+          <li><strong>Programming Language:</strong> Python</li>
+          <li><strong>Data Handling:</strong> Pandas, NumPy</li>
+          <li><strong>Visualization:</strong> Matplotlib, Seaborn, Chart.js</li>
+          <li><strong>Development Environment:</strong> Jupyter Notebook</li>
+          <li><strong>Web Technologies:</strong> HTML, CSS, JavaScript</li>
+          <li><strong>Version Control:</strong> Git & GitHub</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Hardware Requirements</h3>
+        <ul style="margin-top:1rem; line-height:1.9;">
+          <li><strong>System:</strong> Laptop / Desktop Computer</li>
+          <li><strong>RAM:</strong> Minimum 8 GB</li>
+          <li><strong>Processor:</strong> Standard multi-core CPU</li>
+          <li><strong>Storage:</strong> Minimum 10 GB free space</li>
+          <li><strong>GPU:</strong> Not required</li>
+          <li><strong>Internet:</strong> Required for datasets & libraries</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="problem-box" style="margin-top:3rem;">
+      <strong>Note:</strong> Bias Radar is a post-decision auditing system and does
+      not require model training or high-performance hardware. This makes the
+      system lightweight, cost-effective, and suitable for academic and
+      real-world auditing scenarios.
+    </div>
+  </div>
+</section>
+<!-- LIMITATIONS & FUTURE SCOPE -->
+<section id="future">
+  <div class="container">
+    <h2 class="section-title">Limitations & Future Scope</h2>
+    <p class="section-subtitle">
+      While Bias Radar provides meaningful insights into fairness, certain
+      limitations exist. These limitations also open pathways for future
+      enhancements.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Current Limitations</h3>
+        <ul style="margin-top:1rem; line-height:1.9;">
+          <li>Bias Radar does not correct or mitigate bias; it only detects it.</li>
+          <li>Effectiveness depends on the quality and completeness of decision data.</li>
+          <li>Fairness analysis is limited to observable attributes.</li>
+          <li>Does not account for complex causal relationships.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Future Scope</h3>
+        <ul style="margin-top:1rem; line-height:1.9;">
+          <li>Integration of standard fairness metrics (e.g., demographic parity).</li>
+          <li>Support for real-time streaming decision data.</li>
+          <li>Automated bias alerts and fairness dashboards.</li>
+          <li>Extension towards bias mitigation recommendations.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="problem-box" style="margin-top:3rem;">
+      <strong>Insight:</strong> Addressing limitations demonstrates awareness of
+      real-world complexity and highlights the project’s potential for future
+      research and development.
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline" class="alt">
+  <div class="container">
+    <h2 class="section-title">Project Timeline</h2>
+    <div class="timeline">
+      <div class="time-item left">
+        <div class="time-card">
+          <span class="year">Week 1</span>
+          <p>Problem understanding and literature review</p>
+        </div>
+      </div>
+
+      <div class="time-item right">
+        <div class="time-card">
+          <span class="year">Week 2</span>
+          <p>Workflow and architecture design</p>
+        </div>
+      </div>
+
+      <div class="time-item left">
+        <div class="time-card">
+          <span class="year">Week 4</span>
+          <p>Implementation and visualization</p>
+        </div>
+      </div>
+
+      <div class="time-item right">
+        <div class="time-card">
+          <span class="year">Week 5</span>
+          <p>Testing and refinement</p>
+        </div>
+      </div>
+
+      <div class="time-item left">
+        <div class="time-card">
+          <span class="year">Week 6</span>
+          <p>Documentation and presentation</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section>
+  <div class="container">
+    <h2 class="section-title">Project Team</h2>
+    <div class="team">
+      <div class="member">Yashashvi Indulkar</div>
+      <div class="member">Anuj Chauhan</div>
+      <div class="member">Sayyed Khalid Saifullah Suleman</div>
+      <div class="member">Abhinav Gomra</div>
+      <div class="member">Bhumika Verma</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  SCAI | Bias Radar | Team 6
+</footer>
+
+</body>
+</html>
