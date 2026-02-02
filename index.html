@@ -220,6 +220,58 @@ footer{
   padding:2rem;
   margin-top:4rem;
 }
+
+/* SYSTEM SIDE-BY-SIDE : VERTICAL FLOW */
+.system-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2.5rem;
+}
+
+.system-column{
+  background:#ffffff;
+  border:2px solid var(--secondary);
+  border-radius:20px;
+  padding:2rem;
+}
+
+.system-heading{
+  font-size:1.6rem;
+  color:var(--primary);
+  margin-bottom:1.5rem;
+  text-align:center;
+}
+
+.vertical-flow{
+  display:flex;
+  flex-direction:column;     /* FORCE VERTICAL */
+  align-items:center;
+  gap:0.6rem;
+}
+
+.flow-box{
+  background:var(--accent);
+  color:#000;
+  padding:0.9rem 1.4rem;
+  border-radius:14px;
+  font-weight:700;
+  min-width:220px;
+  text-align:center;
+}
+
+.flow-arrow{
+  font-size:1.8rem;
+  color:var(--primary);
+  font-weight:800;
+}
+
+/* MOBILE SAFE */
+@media(max-width:900px){
+  .system-grid{
+    grid-template-columns:1fr;
+  }
+}
+
 </style>
 </head>
 
@@ -378,41 +430,55 @@ footer{
   </div>
 </section>
 
-<!-- WORKFLOW -->
-<section id="workflow" class="alt">
+<!-- SYSTEM OVERVIEW : VERTICAL FLOW -->
+<section id="system" class="alt">
   <div class="container">
-    <h2 class="section-title">System Workflow</h2>
-    <div class="workflow">
-      <div class="step">Decision Data</div>
-      <div class="arrow">➜</div>
-      <div class="step">Sensitive Attributes</div>
-      <div class="arrow">➜</div>
-      <div class="step">Group Segmentation</div>
-      <div class="arrow">➜</div>
-      <div class="step">Bias Analysis</div>
-      <div class="arrow">➜</div>
-      <div class="step">Visual Report</div>
+
+    <h2 class="section-title">System Overview</h2>
+    <p class="section-subtitle">
+      The system workflow explains the sequence of operations, while the system
+      architecture describes the structural components involved in bias auditing.
+      Both are represented vertically for clarity.
+    </p>
+
+    <div class="system-grid">
+
+      <!-- WORKFLOW -->
+      <div class="system-column">
+        <h3 class="system-heading">System Workflow</h3>
+        <div class="vertical-flow">
+          <div class="flow-box">Decision Data</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-box">Sensitive Attributes</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-box">Group Segmentation</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-box">Bias Analysis</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-box">Visual Report</div>
+        </div>
+      </div>
+
+      <!-- ARCHITECTURE -->
+      <div class="system-column">
+        <h3 class="system-heading">System Architecture</h3>
+        <div class="vertical-flow">
+          <div class="flow-box">Decision Dataset</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-box">Attribute Analyzer</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-box">Bias Detection Engine</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-box">Visualization Layer</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-box">Bias Audit Report</div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- ARCHITECTURE -->
-<section id="architecture">
-  <div class="container">
-    <h2 class="section-title">System Architecture</h2>
-    <div class="arch">
-      <div class="arch-box">Decision Dataset</div>
-      <div class="arch-arrow">↓</div>
-      <div class="arch-box">Attribute Analyzer</div>
-      <div class="arch-arrow">↓</div>
-      <div class="arch-box">Bias Detection Engine</div>
-      <div class="arch-arrow">↓</div>
-      <div class="arch-box">Visualization Layer</div>
-      <div class="arch-arrow">↓</div>
-      <div class="arch-box">Bias Audit Report</div>
-    </div>
-  </div>
-</section>
 
 <!-- REAL-TIME USAGE -->
 <section id="usage" class="alt">
@@ -610,3 +676,4 @@ footer{
 
 </body>
 </html>
+
